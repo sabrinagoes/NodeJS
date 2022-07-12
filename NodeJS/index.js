@@ -1,51 +1,35 @@
-//MODULO DE WEB SERVER - HTTP
+const express = require("express");
+const app = express();
 
-const fs = require("fs");
+//Importar roteamento
+const carros = require("./routes/carros");
+const usuario = require("./routes/authUsuario-middlewares");
 
-const http = require("http");
-
-const hostname = "127.0.0.1";
+//config
 const PORT = process.env.PORT || 3000;
 
-const server = http.createServer(function (req, res) {
-  let url = req.url;
-  if (url === "/") {
-    fs.readFile("./public/index.html", (err, conteudo) => {
-      if (err) {
-        throw err;
-      }
-      res.statusCode = 200;
-      res.setHeader("Content-type", "text/html;charset=utf-8");
-      res.end(conteudo);
-    });
-  }
-  console.log(req);
-  if (url === "/sobre") {
-    res.statusCode = 200;
-    res.setHeader("Content-type", "text/html;charset=utf-8");
-    res.end("<h1>Página Sobre</h1>");
-  }
+//MIDDLEWARES(INTERMEDIÁRIO-INTERCEPTADOR-MEIO)
 
-  if (url === "/contato") {
-    res.statusCode = 200;
-    res.setHeader("Content-type", "text/html;charset=utf-8");
-    res.end("<h1>Página de Contato</h1>");
-  }
+// app.get("/", (req, res, next) => {
+//   console.log("Eu o um middleware");
+//   next(); // função para ir pro próximo
+// });
 
-  if (url === "/teste") {
-    res.statusCode = 200;
-    res.setHeader("Content-type", "text/html;charset=utf-8");
-    res.end("<h1>Página de Teste</h1>");
-  }
+// app.get("/", (req, res, next) => {
+//   console.log("Eu o SEGUNDO middleware");
+//   next();
+// });
 
-  if (url === "/nodemon") {
-    //Para atualização automática intalar o nodemon command:npm install -g nodemon
-    res.statusCode = 200;
-    res.setHeader("Content-type", "text/html;charset=utf-8");
-    res.end("<h1>Página de Teste Nodemon</h1>");
-  }
+//GET, POST, PUT, DELETE
+
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
-server.listen(PORT, hostname, function () {
-  console.log(`Servidor rodando em http://${hostname}:${PORT}`);
+app.use("/carros", carros); // usando route importada!
+
+app.use("/authUsuario-middlewares", usuario);
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
