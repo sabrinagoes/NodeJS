@@ -1,0 +1,36 @@
+<div class="bg-light p-5 rounded mt-3">
+  <h1>Cadastrar</h1>
+  <form action="/cad" method="post">
+    <div class="row mt-5">
+      <div class="col-md-5 mb-3">
+        <label for="name" class="form-label">Nome Completo</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="digite seu nome"
+        />
+      </div>
+
+      <div class="col-md-5 mb-3 b">
+        <label for="email" class="form-label">Endereço de Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Digite seu email"
+        />
+      </div>
+
+      <div class="col-md-2">
+        <button class="mt-4 p-2 w-100 btn btn-success">Cadastrar</button>
+      </div>
+
+    </div>
+  </form>
+  <br>
+  {{>_msg}}
+
+</div>
